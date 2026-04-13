@@ -3,12 +3,12 @@
 console.log('🎨 colors.js loading...');
 
 const PRESET_COLORS = [
-  { id: 'green', hex: '#22c55e', gradient: 'var(--mood-green)', name: 'Отличное', emoji: '🟢' },
-  { id: 'yellow', hex: '#eab308', gradient: 'var(--mood-yellow)', name: 'Нейтральное', emoji: '🟡' },
-  { id: 'red', hex: '#dc2626', gradient: 'var(--mood-red)', name: 'Плохое', emoji: '🔴' },
-  { id: 'blue', hex: '#3b82f6', gradient: 'var(--mood-blue)', name: 'Грусть', emoji: '🔵' },
-  { id: 'purple', hex: '#9333ea', gradient: 'var(--mood-purple)', name: 'Вдохновение', emoji: '🟣' },
-  { id: 'black', hex: '#1f2937', gradient: 'var(--mood-black)', name: 'Очень плохое', emoji: '⚫' }
+  { id: 'green', hex: '#22c55e', gradient: 'var(--mood-green)', name: 'Отличное', emoji: '🟢', description: 'Энергия, радость, продуктивность' },
+  { id: 'yellow', hex: '#eab308', gradient: 'var(--mood-yellow)', name: 'Нейтральное', emoji: '🟡', description: 'Спокойствие, обычный день' },
+  { id: 'red', hex: '#dc2626', gradient: 'var(--mood-red)', name: 'Плохое', emoji: '🔴', description: 'Стресс, раздражение, усталость' },
+  { id: 'blue', hex: '#3b82f6', gradient: 'var(--mood-blue)', name: 'Грусть', emoji: '🔵', description: 'Меланхолия, тоска, разочарование' },
+  { id: 'purple', hex: '#9333ea', gradient: 'var(--mood-purple)', name: 'Вдохновение', emoji: '🟣', description: 'Творчество, эйфория, подъём' },
+  { id: 'black', hex: '#1f2937', gradient: 'var(--mood-black)', name: 'Очень плохое', emoji: '⚫', description: 'Депрессия, тревога, выгорание' }
 ];
 
 const ColorsManager = {
@@ -80,17 +80,29 @@ const ColorsManager = {
       <h3>${isEdit ? 'Изменить настроение:' : 'Выберите настроение:'}</h3>
       <div class="colors-grid" id="colors-grid-inner">
         ${colors.map(color => `
-          <div 
-            class="color-option ${selectedColor === color.hex ? 'selected' : ''}" 
-            style="background: ${color.gradient || color.hex}"
-            data-color="${color.hex}"
-            title="${color.name}"
-          >
-            ${color.emoji || ''}
+          <div class="color-item" data-color="${color.hex}">
+            <div 
+              class="color-option ${selectedColor === color.hex ? 'selected' : ''}" 
+              style="background: ${color.gradient || color.hex}"
+              data-color="${color.hex}"
+              data-description="${color.description || ''}"
+              title="${color.name}${color.description ? ': ' + color.description : ''}"
+            >
+              ${color.emoji || ''}
+            </div>
+            <div class="color-label">
+              <span class="color-name">${color.name}</span>
+              ${color.description ? `<span class="color-desc" title="${color.description}">${color.description}</span>` : ''}
+            </div>
           </div>
         `).join('')}
-        <div class="color-option add-custom" id="add-custom-color" title="Добавить свой цвет">
-          +
+        <div class="color-item">
+          <div class="color-option add-custom" id="add-custom-color" title="Добавить свой цвет">
+            +
+          </div>
+          <div class="color-label">
+            <span class="color-name">Добавить</span>
+          </div>
         </div>
       </div>
       ${isEdit ? `
@@ -98,6 +110,9 @@ const ColorsManager = {
           <button class="delete-mood-btn" id="delete-mood-btn">❌ Удалить</button>
         </div>
       ` : ''}
+      <div class="color-legend">
+        <p>💡 Нажмите на цвет, чтобы отметить настроение</p>
+      </div>
     `;
 
     // Add click handlers
