@@ -74,9 +74,10 @@ const ColorsManager = {
     }
 
     const colors = this.getAllColors();
+    const isEdit = selectedColor !== null;
     
     container.innerHTML = `
-      <h3>Выберите настроение:</h3>
+      <h3>${isEdit ? 'Изменить настроение:' : 'Выберите настроение:'}</h3>
       <div class="colors-grid" id="colors-grid-inner">
         ${colors.map(color => `
           <div 
@@ -92,6 +93,11 @@ const ColorsManager = {
           +
         </div>
       </div>
+      ${isEdit ? `
+        <div class="color-actions">
+          <button class="delete-mood-btn" id="delete-mood-btn">❌ Удалить</button>
+        </div>
+      ` : ''}
     `;
 
     // Add click handlers
@@ -110,6 +116,14 @@ const ColorsManager = {
     if (addBtn) {
       addBtn.addEventListener('click', () => {
         this.showAddCustomColorDialog();
+      });
+    }
+
+    // Add delete button handler
+    const deleteBtn = container.querySelector('#delete-mood-btn');
+    if (deleteBtn) {
+      deleteBtn.addEventListener('click', () => {
+        onSelect(null); // null means delete
       });
     }
     

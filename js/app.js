@@ -92,6 +92,11 @@ async function initApp() {
     StatsManager.renderStats('stats-section');
     console.log('✓ Stats initialized');
 
+    // Initialize export manager
+    console.log('Initializing export...');
+    ExportManager.renderExportUI('stats-section');
+    console.log('✓ Export initialized');
+
     // Render color picker with callback
     console.log('Rendering color picker...');
     ColorsManager.renderColorPicker('color-picker', async (color) => {

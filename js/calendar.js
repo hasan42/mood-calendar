@@ -169,6 +169,15 @@ const CalendarManager = {
       console.warn('next-month button not found');
     }
 
+    // Today button
+    const todayBtn = document.getElementById('today-btn');
+    if (todayBtn) {
+      todayBtn.addEventListener('click', () => {
+        console.log('Today button clicked');
+        this.goToToday();
+      });
+    }
+
     // Day click - delegated
     const calendar = document.getElementById('calendar');
     if (calendar) {
@@ -218,6 +227,22 @@ const CalendarManager = {
     console.log('showColorPickerForDay called for:', date);
     ColorsManager.renderColorPicker('color-picker', async (color) => {
       try {
+        if (color === null) {
+          // Delete mood
+          console.log('Deleting mood for date:', date);
+          await StorageManager.removeMood(date);
+          this.selectedColor = null;
+          
+          // Update indicator
+          const indicator = document.querySelector(`#mood-${date}`);
+          if (indicator) {
+            indicator.style.backgroundColor = '';
+          }
+          
+          UI.showToast('Настроение удалено', 'success');
+          return;
+        }
+        
         console.log('Saving color:', color, 'for date:', date);
         await StorageManager.setMood(date, color);
         this.selectedColor = color;
