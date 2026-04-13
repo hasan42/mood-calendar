@@ -178,6 +178,15 @@ const CalendarManager = {
       });
     }
 
+    // Month/year display - click to go to today
+    const monthDisplay = document.querySelector('.current-month');
+    if (monthDisplay) {
+      monthDisplay.addEventListener('click', () => {
+        console.log('Month display clicked - going to today');
+        this.goToToday();
+      });
+    }
+
     // Day click - delegated
     const calendar = document.getElementById('calendar');
     if (calendar) {

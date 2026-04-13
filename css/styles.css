@@ -186,6 +186,18 @@ body {
 
 .current-month:hover {
   background-color: var(--bg-secondary);
+  cursor: pointer;
+}
+
+.current-month:active {
+  transform: scale(0.98);
+}
+
+.current-month::after {
+  content: '⌄';
+  font-size: 10px;
+  opacity: 0.5;
+  margin-left: 4px;
 }
 
 .current-month #month-name {
