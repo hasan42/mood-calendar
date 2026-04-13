@@ -1,22 +1,104 @@
-/* Светлая тема (default) */
+/* Themes and Gradients for Mood Calendar */
+
+/* ========================================
+   СВЕТЛАЯ ТЕМА (по умолчанию)
+   ======================================== */
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f5f5f5;
-  --bg-tertiary: #e8e8e8;
-  --text-primary: #000000;
-  --text-secondary: #666666;
-  --text-tertiary: #999999;
-  --accent-color: #0077ff;
-  --border-color: #e0e0e0;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-tertiary: #adb5bd;
+  --accent-color: #4f46e5;
+  --accent-hover: #4338ca;
+  --border-color: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --shadow-lg: rgba(0, 0, 0, 0.15);
+  
+  /* Mood gradients (light theme) */
+  --mood-green: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  --mood-yellow: linear-gradient(135deg, #fde047 0%, #eab308 100%);
+  --mood-red: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
+  --mood-blue: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  --mood-purple: linear-gradient(135deg, #c084fc 0%, #9333ea 100%);
+  --mood-black: linear-gradient(135deg, #4b5563 0%, #1f2937 100%);
 }
 
-/* Предустановленные цвета настроений */
-:root {
-  --mood-green: #4CAF50;
-  --mood-yellow: #FFEB3B;
-  --mood-red: #F44336;
-  --mood-blue: #2196F3;
-  --mood-purple: #9C27B0;
-  --mood-black: #212121;
+/* ========================================
+   ТЁМНАЯ ТЕМА
+   ======================================== */
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --accent-color: #818cf8;
+  --accent-hover: #a5b4fc;
+  --border-color: #475569;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-lg: rgba(0, 0, 0, 0.5);
+  
+  /* Mood gradients (dark theme - more neon) */
+  --mood-green: linear-gradient(135deg, #4ade80 0%, #16a34a 100%);
+  --mood-yellow: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+  --mood-red: linear-gradient(135deg, #f87171 0%, #b91c1c 100%);
+  --mood-blue: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  --mood-purple: linear-gradient(135deg, #c084fc 0%, #7c3aed 100%);
+  --mood-black: linear-gradient(135deg, #9ca3af 0%, #374151 100%);
+}
+
+/* Auto dark mode based on system preference */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-tertiary: #94a3b8;
+    --accent-color: #818cf8;
+    --accent-hover: #a5b4fc;
+    --border-color: #475569;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-lg: rgba(0, 0, 0, 0.5);
+    
+    --mood-green: linear-gradient(135deg, #4ade80 0%, #16a34a 100%);
+    --mood-yellow: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+    --mood-red: linear-gradient(135deg, #f87171 0%, #b91c1c 100%);
+    --mood-blue: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+    --mood-purple: linear-gradient(135deg, #c084fc 0%, #7c3aed 100%);
+    --mood-black: linear-gradient(135deg, #9ca3af 0%, #374151 100%);
+  }
+}
+
+/* ========================================
+   CUSTOM SCROLLBAR
+   ======================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-tertiary) var(--bg-tertiary);
 }

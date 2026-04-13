@@ -3,12 +3,12 @@
 console.log('🎨 colors.js loading...');
 
 const PRESET_COLORS = [
-  { id: 'green', hex: '#4CAF50', name: 'Отличное', emoji: '🟢' },
-  { id: 'yellow', hex: '#FFEB3B', name: 'Нейтральное', emoji: '🟡' },
-  { id: 'red', hex: '#F44336', name: 'Плохое', emoji: '🔴' },
-  { id: 'blue', hex: '#2196F3', name: 'Грусть', emoji: '🔵' },
-  { id: 'purple', hex: '#9C27B0', name: 'Вдохновение', emoji: '🟣' },
-  { id: 'black', hex: '#212121', name: 'Очень плохое', emoji: '⚫' }
+  { id: 'green', hex: '#22c55e', gradient: 'var(--mood-green)', name: 'Отличное', emoji: '🟢' },
+  { id: 'yellow', hex: '#eab308', gradient: 'var(--mood-yellow)', name: 'Нейтральное', emoji: '🟡' },
+  { id: 'red', hex: '#dc2626', gradient: 'var(--mood-red)', name: 'Плохое', emoji: '🔴' },
+  { id: 'blue', hex: '#3b82f6', gradient: 'var(--mood-blue)', name: 'Грусть', emoji: '🔵' },
+  { id: 'purple', hex: '#9333ea', gradient: 'var(--mood-purple)', name: 'Вдохновение', emoji: '🟣' },
+  { id: 'black', hex: '#1f2937', gradient: 'var(--mood-black)', name: 'Очень плохое', emoji: '⚫' }
 ];
 
 const ColorsManager = {
@@ -82,7 +82,7 @@ const ColorsManager = {
         ${colors.map(color => `
           <div 
             class="color-option ${selectedColor === color.hex ? 'selected' : ''}" 
-            style="background-color: ${color.hex}"
+            style="background: ${color.gradient || color.hex}"
             data-color="${color.hex}"
             title="${color.name}"
           >

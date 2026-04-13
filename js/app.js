@@ -2,6 +2,74 @@
 
 console.log('🚀 app.js started loading');
 
+// Theme Manager
+const ThemeManager = {
+  currentTheme: 'auto',
+
+  init() {
+    // Load saved theme or detect from system
+    const savedTheme = localStorage.getItem('mood-calendar-theme') || 'auto';
+    this.setTheme(savedTheme);
+    this.renderToggle();
+  },
+
+  setTheme(theme) {
+    this.currentTheme = theme;
+    const root = document.documentElement;
+    
+    if (theme === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+    } else if (theme === 'light') {
+      root.setAttribute('data-theme', 'light');
+    } else {
+      // Auto - remove attribute to use media query
+      root.removeAttribute('data-theme');
+    }
+    
+    localStorage.setItem('mood-calendar-theme', theme);
+  },
+
+  toggle() {
+    const themes = ['auto', 'light', 'dark'];
+    const currentIndex = themes.indexOf(this.currentTheme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    const nextTheme = themes[nextIndex];
+    
+    this.setTheme(nextTheme);
+    
+    const labels = { auto: 'Авто', light: '☀️ Светлая', dark: '🌙 Тёмная' };
+    UI.showToast(`Тема: ${labels[nextTheme]}`, 'success');
+    this.updateToggleIcon();
+  },
+
+  renderToggle() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    
+    let toggle = document.getElementById('theme-toggle');
+    if (!toggle) {
+      toggle = document.createElement('button');
+      toggle.id = 'theme-toggle';
+      toggle.className = 'theme-toggle-btn';
+      toggle.title = 'Переключить тему';
+      toggle.addEventListener('click', () => this.toggle());
+      header.appendChild(toggle);
+    }
+    
+    this.updateToggleIcon();
+  },
+
+  updateToggleIcon() {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+    
+    const icons = { auto: '🌓', light: '☀️', dark: '🌙' };
+    toggle.textContent = icons[this.currentTheme] || '🌓';
+  }
+};
+
+window.ThemeManager = ThemeManager;
+
 // UI Utilities
 const UI = {
   showLoading() {
@@ -38,10 +106,60 @@ const UI = {
     console.error(`Error${context ? ` in ${context}` : ''}:`, error);
     const msg = context ? `Ошибка: ${context}` : 'Произошла ошибка';
     this.showToast(msg, 'error');
+  },
+
+  // Skeleton loading animation
+  showSkeleton(containerId, count = 5) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    container.innerHTML = Array(count).fill(0).map(() => `
+      <div class="skeleton skeleton-pulse">
+        <div class="skeleton-line" style="width: 60%"></div>
+        <div class="skeleton-line" style="width: 40%"></div>
+      </div>
+    `).join('');
   }
 };
 
 window.UI = UI;
+
+// Floating Action Button Manager
+const FABManager = {
+  init() {
+    const fab = document.createElement('button');
+    fab.id = 'fab-quick-add';
+    fab.className = 'fab-button';
+    fab.innerHTML = '+';
+    fab.title = 'Быстрое добавление настроения';
+    
+    fab.addEventListener('click', () => {
+      // Scroll to color picker and select today
+      CalendarManager.goToToday();
+      const today = new Date().toISOString().split('T')[0];
+      const todayEl = document.querySelector(`[data-date="${today}"]`);
+      if (todayEl) {
+        todayEl.click();
+      }
+    });
+    
+    document.body.appendChild(fab);
+    
+    // Show/hide on scroll
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      if (currentScroll > lastScroll && currentScroll > 200) {
+        fab.classList.add('fab-hidden');
+      } else {
+        fab.classList.remove('fab-hidden');
+      }
+      lastScroll = currentScroll;
+    });
+  }
+};
+
+window.FABManager = FABManager;
 
 // Initialize app
 async function initApp() {
@@ -71,6 +189,11 @@ async function initApp() {
     } else {
       console.log('vkBridge not available (running outside VK)');
     }
+
+    // Initialize theme
+    console.log('Initializing theme...');
+    ThemeManager.init();
+    console.log('✓ Theme initialized');
 
     // Initialize storage
     console.log('Initializing storage...');
@@ -102,22 +225,10 @@ async function initApp() {
     ExportManager.renderExportUI('stats-section');
     console.log('✓ Export initialized');
 
-    // Render color picker with callback
-    console.log('Rendering color picker...');
-    ColorsManager.renderColorPicker('color-picker', async (color) => {
-      console.log('Color selected:', color);
-      const selectedDate = CalendarManager.selectedDate;
-      if (selectedDate) {
-        try {
-          await StorageManager.setMood(selectedDate, color);
-          CalendarManager.render();
-          UI.showToast('Настроение сохранено!', 'success');
-        } catch (error) {
-          UI.handleError(error, 'сохранение настроения');
-        }
-      }
-    });
-    console.log('✓ Color picker rendered');
+    // Initialize FAB
+    console.log('Initializing FAB...');
+    FABManager.init();
+    console.log('✓ FAB initialized');
 
     // Hide loading after successful init
     setTimeout(() => {
