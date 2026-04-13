@@ -481,12 +481,203 @@ body {
   transform: scale(0.95);
 }
 
+/* Heatmap section */
+.heatmap-section {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.4s ease 0.2s forwards;
+  overflow-x: auto;
+}
+
+.heatmap-section h3 {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.heatmap-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.heatmap-nav-btn {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.heatmap-nav-btn:hover {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.heatmap-year {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 60px;
+  text-align: center;
+}
+
+.heatmap-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 400px;
+}
+
+.heatmap-months {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.heatmap-header {
+  width: 24px;
+}
+
+.heatmap-month-label {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+
+.heatmap-days {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heatmap-day-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.heatmap-day-label {
+  width: 24px;
+  text-align: center;
+  font-size: 9px;
+  color: var(--text-secondary);
+}
+
+.heatmap-cell {
+  flex: 1;
+  aspect-ratio: 1;
+  min-height: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.3);
+  z-index: 10;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.heatmap-legend span {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.legend-colors {
+  display: flex;
+  gap: 4px;
+}
+
+.legend-item {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+/* Color actions (delete button) */
+.color-actions {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.delete-mood-btn {
+  background-color: transparent;
+  color: var(--mood-red, #F44336);
+  border: 1px solid var(--mood-red, #F44336);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.delete-mood-btn:hover {
+  background-color: var(--mood-red, #F44336);
+  color: white;
+}
+
+/* Enhanced animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Glassmorphism cards */
+.color-picker,
+.stats-section,
+.heatmap-section {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 /* Touch optimization */
 @media (hover: none) {
   .color-option:hover,
   .nav-btn:hover,
   .stats-btn:hover,
-  .export-btn:hover {
+  .export-btn:hover,
+  .heatmap-nav-btn:hover,
+  .heatmap-cell:hover {
     transform: none;
     box-shadow: none;
   }
@@ -494,7 +685,13 @@ body {
   .color-option:active,
   .nav-btn:active,
   .stats-btn:active,
-  .export-btn:active {
+  .export-btn:active,
+  .heatmap-nav-btn:active,
+  .heatmap-cell:active {
     transform: scale(0.95);
+  }
+  
+  .heatmap-cell.has-data:active {
+    transform: scale(1.2);
   }
 }

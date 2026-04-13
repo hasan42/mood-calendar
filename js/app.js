@@ -87,6 +87,11 @@ async function initApp() {
     CalendarManager.init();
     console.log('✓ Calendar initialized');
 
+    // Initialize heatmap
+    console.log('Initializing heatmap...');
+    HeatmapManager.renderHeatmap('main');
+    console.log('✓ Heatmap initialized');
+
     // Initialize stats
     console.log('Initializing stats...');
     StatsManager.renderStats('stats-section');
