@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Календарь Настроений</title>
+  <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/calendar.css">
+</head>
+<body>
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Загрузка...</div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toast" class="toast"></div>
+
+  <header class="header">
+    <h1>📅 Календарь Настроений</h1>
+  </header>
+
+  <main class="main">
+    <div class="calendar-nav">
+      <button id="prev-month" class="nav-btn">←</button>
+      <div class="current-month">
+        <span id="month-name"></span>
+        <span id="year"></span>
+      </div>
+      <button id="next-month" class="nav-btn">→</button>
+    </div>
+
+    <div id="calendar" class="calendar">
+      <!-- Calendar grid will be rendered here -->
+    </div>
+
+    <div id="color-picker" class="color-picker">
+      <h3>Выберите настроение:</h3>
+      <div class="colors-grid" id="colors-grid">
+        <!-- Colors will be rendered here -->
+      </div>
+    </div>
+
+    <div id="stats-section" class="stats-section">
+      <!-- Stats will be rendered here -->
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Календарь Настроений © 2026</p>
+  </footer>
+
+  <script src="js/vk-api.js"></script>
+  <script src="js/colors.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/calendar.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
